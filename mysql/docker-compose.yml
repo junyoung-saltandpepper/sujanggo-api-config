@@ -1,0 +1,24 @@
+version: "3.7"
+services:
+  sujanggo-mysql:
+    image: mysql:8.0.33
+    restart: always
+    container_name: mysql
+    platform: linux/amd64
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_DATABASE=sujanggo_api_local
+      - MYSQL_ROOT_PASSWORD=passwd
+      - TZ=Asia/Seoul
+    command: # 명령어 실행
+      - --lower_case_table_names=1
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - sujanggo-mysql-vol:/var/lib/mysql # -v 옵션 (다렉토리 마운트 설정)
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+volumes:
+  sujanggo-mysql-vol:
