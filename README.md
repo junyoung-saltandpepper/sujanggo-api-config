@@ -5,6 +5,7 @@
 * docker 
 * docker-compose
 * local 환경변수
+* 드림시큐리티 dat 파일 저장
 
 <hr/>
 
@@ -26,14 +27,28 @@ open /Applications/Docker.app/
 docker-compose -f ./mysql/docker-compose.yml up -d
 ```
 
-## 환겨변수 설정
+## 환경변수 설정
 ```zsh
-echo "export ENCRYPTION_KEY=$(openssl rand -base64 9 | head -c 12)" >> ~/.zshrc && source ~/.zshrc
+# 암호화키 담당자 문의
+if ! grep -q 'ENCRYPTION_KEY' ~/.zshrc; then
+  echo "export ENCRYPTION_KEY=암호화키" >> ~/.zshrc
+fi
+
+# 실행 프로파일 로컬로 설정
+if ! grep -q 'spring.profiles.active' ~/.zshrc; then
+  echo "export spring.profiles.active=local" >> ~/.zshrc
+fi
 ```
+
+## DAT 파일 저장
+```zsh
+# 해당 경로에 드림시큐리티 dat 파일 다운로드 파일은 담당자에게 문의
+mkdir -p /etc/sujanggo_api/mobileOK/
+```
+
 
 ## 단축 스크립트
 ```zsh
 ./run_docker.sh
 ./run_mysql.sh
-./import_env.sh
 ```
